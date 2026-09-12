@@ -1,0 +1,5 @@
+.wrangler/
+worker/index.js.backup
+node_modules/
+.env
+.env.*
