@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>El Arte de las Velas — Maestro Definitivo</title>
+  <meta name="description" content="El Arte de las Velas — Maestro Definitivo. Un manual ilustrado para crear, preparar e intencionar tus propias velas.">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <a href="index.html" class="logo">La Copia Feliz del Edén</a>
+      <nav>
+        <a href="index.html">Inicio</a>
+        <a href="libro.html">Libro</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <section class="hero container section">
+      <div>
+        <span class="eyebrow">PRIMER LIBRO DEL EDÉN</span>
+
+        <h1>El Arte de las Velas</h1>
+
+        <p class="hero-subtitle">
+          Maestro Definitivo
+        </p>
+
+        <p>
+          Un manual creado para aprender a trabajar con velas,
+          creatividad e intención, desde una mirada cálida,
+          sencilla y espiritual.
+        </p>
+
+        <p>
+          📕 <strong>Edición digital PDF</strong><br>
+          ✨ Precio: <strong>$9.900 CLP</strong>
+        </p>
+
+        <a href="#comprar" class="btn btn-primary">
+          Comprar el libro →
+        </a>
+      </div>
+
+      <div class="video-placeholder">
+        <div style="font-size:4rem;">🕯️</div>
+        <b>El Arte de las Velas</b>
+        <small>Maestro Definitivo · v1.0</small>
+      </div>
+    </section>
+
+
+    <section class="container section">
+      <span class="eyebrow">¿QUÉ ENCONTRARÁS?</span>
+
+      <h2>Un pequeño viaje alrededor de la vela</h2>
+
+      <div class="cards">
+
+        <article class="card">
+          <h3>🕯️ Creación</h3>
+          <p>
+            Aprende los fundamentos para crear tus propias velas
+            de manera sencilla.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>✨ Intención</h3>
+          <p>
+            Descubre formas de preparar tus velas como símbolos
+            de tus deseos, propósitos y momentos especiales.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>🌙 Ritual</h3>
+          <p>
+            Ideas para convertir un momento cotidiano en una
+            experiencia personal, creativa y significativa.
+          </p>
+        </article>
+
+      </div>
+    </section>
+
+
+    <section class="container section" id="comprar">
+
+      <div class="card" style="max-width:650px;margin:auto;text-align:center;">
+
+        <span class="eyebrow">EDICIÓN DIGITAL</span>
+
+        <h2>El Arte de las Velas</h2>
+
+        <p>
+          <strong style="font-size:2rem;">$9.900 CLP</strong>
+        </p>
+
+        <p>
+          Recibirás acceso digital al libro en formato PDF
+          después de que tu pago sea aprobado.
+        </p>
+
+        <form id="purchase-form">
+
+          <label for="email">
+            Tu correo electrónico
+          </label>
+
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="tu@email.com"
+            required
+            autocomplete="email"
+            style="width:100%;padding:14px;margin:12px 0 18px;"
+          >
+
+          <button
+            type="submit"
+            class="btn btn-primary"
+            id="buy-button"
+          >
+            Comprar por $9.900 →
+          </button>
+
+          <p id="message" style="margin-top:15px;"></p>
+
+        </form>
+
+        <small>
+          Pago procesado de forma segura mediante Flow.
+          <br>
+          El PDF no se encuentra públicamente disponible.
+        </small>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>
+        © 2026 La Copia Feliz del Edén
+      </p>
+      <p>
+        <a href="privacidad.html">Privacidad</a> ·
+        <a href="terminos.html">Términos</a>
+      </p>
+    </div>
+  </footer>
+
+
+<script>
+const form = document.getElementById("purchase-form");
+const button = document.getElementById("buy-button");
+const message = document.getElementById("message");
+
+form.addEventListener("submit", async function(event) {
+
+  event.preventDefault();
+
+  const email = document.getElementById("email").value.trim();
+
+  button.disabled = true;
+  button.textContent = "Preparando compra...";
+  message.textContent = "";
+
+  try {
+
+    const response = await fetch("/api/create-payment", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ email })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok || !data.checkoutUrl) {
+      throw new Error(data.error || "No fue posible iniciar la compra.");
+    }
+
+    window.location.href = data.checkoutUrl;
+
+  } catch (error) {
+
+    message.textContent = "⚠️ " + error.message;
+
+    button.disabled = false;
+    button.textContent = "Comprar por $9.900 →";
+  }
+
+});
+</script>
+
+</body>
+</html>
