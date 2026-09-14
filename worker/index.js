@@ -603,8 +603,9 @@ export default {
      */
 
     return new Response(
-      "La Copia Feliz del Edén — Worker activo",
+      "Not Found",
       {
+        status: 404,
         headers: {
           "Content-Type":
             "text/plain; charset=utf-8"
